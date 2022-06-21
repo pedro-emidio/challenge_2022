@@ -1,0 +1,11 @@
+{
+  "name": "challenge2022",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "mongoose": "^6.3.4",
+    "serverless-offline": "^8.8.0"
+  }
+}

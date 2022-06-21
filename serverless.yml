@@ -1,0 +1,26 @@
+service: challenge2022
+
+frameworkVersion: '2 || 3'
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: '20201221'
+
+functions:
+  hello:
+    handler: ./src/useCases/helloWorld/index.handler
+    events:
+      - httpApi:
+          path: /
+          method: get
+          cors: true  
+          authorizer:
+            type: JWT
+            functionName: authorizerFunction
+          
+  authorizerFunction:
+    handler: ./src/auth/authorizer.authorizerFun
