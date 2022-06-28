@@ -8,19 +8,20 @@ plugins:
 provider:
   name: aws
   runtime: nodejs14.x
+  environment: ${file(./.env.json)}
   lambdaHashingVersion: '20201221'
 
 functions:
   hello:
     handler: ./src/useCases/helloWorld/index.handler
     events:
-      - httpApi:
+      - http:
           path: /
           method: get
           cors: true  
-          authorizer:
-            type: JWT
-            functionName: authorizerFunction
+          # authorizer:
+          #   type: JWT
+          #   functionName: authorizerFunction
           
   authorizerFunction:
     handler: ./src/auth/authorizer.authorizerFun

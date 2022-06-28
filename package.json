@@ -3,9 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon --exec npx sls offline --stage dev",
+    "prd": "nodemon --exec npx sls offline --stage prd",
+    "start": "x"
+  },
   "dependencies": {
     "dotenv": "^16.0.1",
-    "mongoose": "^6.3.4",
+    "mongoose": "^6.3.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.18",
+    "serverless": "^3.19.0",
     "serverless-offline": "^8.8.0"
   }
 }

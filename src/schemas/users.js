@@ -7,10 +7,11 @@ try {
   Users = Mongoose.model(
     "Users",
     new Mongoose.Schema({
-      userName: { type: String, require: true },
+      name: { type: String, require: true },
       password: { type: String, require: true },
+      email: {type: String, required: true, unique: true}
     })
   );
 }
 
-module.exports = Users;
+module.exports = {Users};
