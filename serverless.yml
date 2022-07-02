@@ -12,16 +12,60 @@ provider:
   lambdaHashingVersion: '20201221'
 
 functions:
-  hello:
-    handler: ./src/useCases/helloWorld/index.handler
+  createUser:
+    handler: ./src/useCases/createUser/index.handler
     events:
       - http:
-          path: /
+          path: /createUser
+          method: post
+          cors: true  
+          # authorizer:
+          #   type: JWT
+          #   functionName: authorizerFunction
+  
+  deleteUser:
+    handler: ./src/useCases/deleteUser/index.handler
+    events:
+      - http:
+          path: /deleteUser
+          method: delete
+          cors: true  
+          # authorizer:
+          #   type: JWT
+          #   functionName: authorizerFunction
+
+  findUser:
+    handler: ./src/useCases/findUser/index.handler
+    events:
+      - http:
+          path: /findUser
           method: get
           cors: true  
           # authorizer:
           #   type: JWT
           #   functionName: authorizerFunction
-          
+
+  updateUser:
+    handler: ./src/useCases/updateUser/index.handler
+    events:
+      - http:
+          path: /updateUser
+          method: update
+          cors: true  
+          # authorizer:
+          #   type: JWT
+          #   functionName: authorizerFunction
+
+  createDevice:
+    handler: ./src/useCases/createDevice/index.handler
+    events:
+      - http:
+          path: /createDevice
+          method: update
+          cors: true  
+          # authorizer:
+          #   type: JWT
+          #   functionName: authorizerFunction
+
   authorizerFunction:
     handler: ./src/auth/authorizer.authorizerFun

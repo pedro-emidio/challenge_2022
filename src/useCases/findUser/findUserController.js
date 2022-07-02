@@ -1,16 +1,16 @@
-class HelloWorldController{
-    #helloWorldService
-    constructor(helloWorldService){
-        this.#helloWorldService = helloWorldService
+class FindUserController{
+    #findUserService
+    constructor(findUserService){
+        this.#findUserService = findUserService
     }
     async handler(event){
         try {
-            const data = await this.#helloWorldService.execute(event.userId)
+            const data = await this.#findUserService.execute(event)
             return {
                 statusCode: 200,
                 body: JSON.stringify(
                   {
-                    message: "message success",
+                    message: `${data}`,
                     input: event,
                     data
                   },
@@ -23,7 +23,7 @@ class HelloWorldController{
                 statusCode: 500,
                 body: JSON.stringify(
                     {
-                        message: "message fail",
+                        message: "fail",
                     },
                   null,
                   2
@@ -33,4 +33,4 @@ class HelloWorldController{
     }
 }
 
-module.exports = HelloWorldController
+module.exports = FindUserController

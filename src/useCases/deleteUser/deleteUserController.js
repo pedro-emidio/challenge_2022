@@ -1,23 +1,18 @@
-class HelloWorldController{
-    #helloWorldService
-    constructor(helloWorldService){
-        this.#helloWorldService = helloWorldService
+class DeleteUserController{
+    #deleteUserService
+    constructor(deleteUserService){
+        this.#deleteUserService = deleteUserService
     }
     async handler(event){
-        console.log("Caiu no controller")
         try {
-            const data = await this.#helloWorldService.execute()
-            console.log("Caiu no controller 2 " + "\n" + data)
-
-//            const data = await this.#helloWorldService.execute(event.userId)
-            console.log(data)
+            const data = await this.#deleteUserService.execute(event.queryStringParameters)
             return {
                 statusCode: 200,
                 body: JSON.stringify(
                   {
-                    message: `${data}`,
-                   // input: event,
-                   // data
+                    message: `${data.user}`,
+                    input: event,
+                    data
                   },
                   null,
                   2
@@ -38,4 +33,4 @@ class HelloWorldController{
     }
 }
 
-module.exports = HelloWorldController
+module.exports = DeleteUserController
