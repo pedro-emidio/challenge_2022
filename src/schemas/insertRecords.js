@@ -17,4 +17,4 @@ try {
   );
 }
 
-module.exports = InsertRecord;
+module.exports = {InsertRecord};

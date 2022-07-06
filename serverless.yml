@@ -31,41 +31,46 @@ functions:
           method: delete
           cors: true  
           # authorizer:
-          #   type: JWT
           #   functionName: authorizerFunction
 
-  findUser:
+  loginUser:
     handler: ./src/useCases/findUser/index.handler
     events:
       - http:
           path: /findUser
           method: get
           cors: true  
-          # authorizer:
-          #   type: JWT
-          #   functionName: authorizerFunction
+          authorizer: authorizerFunction
+
+  findUser:
+    handler: ./src/useCases/loginUser/index.handler
+    events:
+      - http:
+          path: /login
+          method: get
+          cors: true  
+          # authorizer: authorizerFunction   
 
   updateUser:
     handler: ./src/useCases/updateUser/index.handler
     events:
       - http:
           path: /updateUser
-          method: update
+          method: put
           cors: true  
           # authorizer:
-          #   type: JWT
           #   functionName: authorizerFunction
 
   createDevice:
-    handler: ./src/useCases/createDevice/index.handler
+    handler: ./src/useCases/devices/create/index.handler
     events:
       - http:
           path: /createDevice
-          method: update
+          method: post
           cors: true  
           # authorizer:
           #   type: JWT
           #   functionName: authorizerFunction
 
   authorizerFunction:
-    handler: ./src/auth/authorizer.authorizerFun
+    handler: ./src/auth/authorizer.handler

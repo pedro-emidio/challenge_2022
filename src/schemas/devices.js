@@ -9,7 +9,8 @@ try {
     Devices = Mongoose.model(
     "Devices",
     new Mongoose.Schema({
-        userId: {type: ObjectId, refer: "Users", required: true },
+        userId: {type: String, required: false },
+        // userId: {type: ObjectId, refer: "Users", required: false },
         alias: {type: String, require: false},
         entrada: {type: String, require: false},
         token: { type: String,},
@@ -17,4 +18,4 @@ try {
   );
 }
 
-module.exports = Devices;
+module.exports = {Devices};

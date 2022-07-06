@@ -1,10 +1,10 @@
-const CreateUserController = require('./createUserController')
-const CreateUserService = require('./createUserService')
+const CreateDeviceController = require('./createDeviceController')
+const CreateDeviceService = require('./createDeviceService')
 
-const UserRepository = require('../../data/repositories/userRepository')
+const DeviceRepository = require('../../../data/repositories/devicesRepository')
 
-let userRepository = new UserRepository()
-const createUserService = new CreateUserService(userRepository)
-const createUserController = new CreateUserController(createUserService)
+let devicesRepository = new DeviceRepository()
+const createDeviceService = new CreateDeviceService(devicesRepository)
+const createDeviceController = new CreateDeviceController(createDeviceService)
 
-module.exports.handler = createUserController.handler.bind(createUserController)
+module.exports.handler = createDeviceController.handler.bind(createDeviceController)

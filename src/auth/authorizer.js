@@ -1,25 +1,22 @@
+const jwt = require("jsonwebtoken");
+
 exports.handler = async event => {
-    const tokenID = (event.headers && (event.headers['authorization']))
-
-    if (!tokenID) {
-        console.log('could not find a token on the event');
-        return generatePolicy({ allow: false });
-    }
-
     try {
-        const token = await Mongoose.get(tokenID, DATA_BASE_URL);
-
+        const token = event.authorizationToken.split(" ")[1]
         if (!token) {
-            console.log(`no token for token ID of ${tokenID}`);
+            console.log('could not find a token on the event');
             return generatePolicy({ allow: false });
         }
 
+        if(!jwt.verify(token, process.env.JWS_TOKEN)) return "necessário fzr login"
+        
         if (token.expiryDate && token.expiryDate < Date.now()) {
             console.log('after expiry date');
             return generatePolicy({ allow: false });
         }
-
-        return generatePolicy({ allow: true });
+        const policy = generatePolicy({ allow: true });
+        console.log("POLICY: ", policy)
+        return policy 
     } catch (error) {
         console.log('error ', error);
         return generatePolicy({ allow: false });
@@ -39,4 +36,3 @@ const generatePolicy = ({ allow }) => {
         },
     };
 };
-// Falta criar o model de usuário no banco

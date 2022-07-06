@@ -1,18 +1,18 @@
-class CreateDeviceController{
-    #createDeviceService
-    constructor(createDeviceService){
-        this.#createDeviceService = createDeviceService
+class LoginUserController{
+    #loginUserService
+    constructor(loginUserService){
+        this.#loginUserService = loginUserService
     }
     async handler(event){
         try {
-            const data = await this.#createDeviceService.execute(event)
+            const token = await this.#loginUserService.execute(event.queryStringParameters)
             return {
                 statusCode: 200,
                 body: JSON.stringify(
                   {
-                    message: `success`,
+                    token: `Bearer ${token}`,
                     input: event,
-                    data
+                    message: "success"
                   },
                   null,
                   2
@@ -33,4 +33,4 @@ class CreateDeviceController{
     }
 }
 
-module.exports = CreateDeviceController
+module.exports = LoginUserController

@@ -1,8 +1,6 @@
 const db = require('../mongodb')
 
-const {Users} = require("../../schemas/users")
-const {InsertRecord} = require("../../schemas/insertRecords")
-
+const {Users} = require("../../schemas")
 class UserRepository{
     constructor(){
         this.schemas = db
@@ -12,8 +10,9 @@ class UserRepository{
     async createUser(user){
         try {
             await db()
-            const response = await this.users.create({ ...user })
+            return await this.users.create({ ...user })
         } catch (error) {
+            console.log(error)
             return error
         }
     }
@@ -35,6 +34,16 @@ class UserRepository{
             await db()
             const response = await this.users.findById(user.id)
             return response
+        } catch (error) {
+            console.log(error)
+            return error
+        }
+    }
+
+    async findUserByEmail(email){
+        try {
+            await db()
+            return await this.users.find({email})
         } catch (error) {
             console.log(error)
             return error
