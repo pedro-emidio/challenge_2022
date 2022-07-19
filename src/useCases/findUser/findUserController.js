@@ -1,21 +1,22 @@
-class FindUserController{
-    #findUserService
-    constructor(findUserService){
-        this.#findUserService = findUserService
+class FindUserController {
+    #findUserService;
+    constructor(findUserService) {
+        this.#findUserService = findUserService;
     }
-    async handler(event){
+    async handler(event) {
         try {
-            const data = await this.#findUserService.execute(event)
+            console.log(event?.requestContext?.authorizer?.userId);
+            const data = await this.#findUserService.execute(event);
             return {
                 statusCode: 200,
                 body: JSON.stringify(
-                  {
-                    message: `${data}`,
-                    input: event,
-                    data
-                  },
-                  null,
-                  2
+                    {
+                        message: `${data}`,
+                        input: event,
+                        data,
+                    },
+                    null,
+                    2
                 ),
             };
         } catch (error) {
@@ -25,12 +26,12 @@ class FindUserController{
                     {
                         message: "fail",
                     },
-                  null,
-                  2
+                    null,
+                    2
                 ),
             };
         }
     }
 }
 
-module.exports = FindUserController
+module.exports = FindUserController;

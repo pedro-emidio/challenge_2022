@@ -1,52 +1,60 @@
-const db = require('../mongodb')
+const db = require("../mongodb");
 
-const {Users} = require("../../schemas")
-class UserRepository{
-    constructor(){
-        this.schemas = db
+const { Users } = require("../../schemas");
+class UserRepository {
+    constructor() {
+        this.schemas = db;
         /** @type {import("mongoose").default.Model} */
-        this.users = Users
+        this.users = Users;
     }
-    async createUser(user){
+    async createUser(user) {
         try {
-            await db()
-            return await this.users.create({ ...user })
+            await db();
+            return await this.users.create({ ...user });
         } catch (error) {
-            console.log(error)
-            return error
+            console.log(error);
+            return error;
         }
     }
-    async deleteUser(user){
+    async deleteUser(user) {
         try {
-            await db()
-            const response = await this.users.deleteOne({ _id: user._id })
-            if (response.deletedCount === 1){
-                return {statusCode: 200, message: "user deleted", success: true}
+            await db();
+            const response = await this.users.deleteOne({ _id: user._id });
+            if (response.deletedCount === 1) {
+                return {
+                    statusCode: 200,
+                    message: "user deleted",
+                    success: true,
+                };
             }
-            return {statusCode: 204, message: "User not found", success: false}
+            return {
+                statusCode: 204,
+                message: "User not found",
+                success: false,
+            };
         } catch (error) {
-            return {statusCode: 500, error, success: false}
+            return { statusCode: 500, error, success: false };
         }
     }
 
-    async findUserById(user){
+    async findUserById(user) {
         try {
-            await db()
-            const response = await this.users.findById(user.id)
-            return response
+            await db();
+            const response = await this.users.findById(user.id);
+            return response;
         } catch (error) {
-            console.log(error)
-            return error
+            console.log(error);
+            return error;
         }
     }
 
-    async findUserByEmail(email){
+    async findUserByEmail(email) {
         try {
-            await db()
-            return await this.users.find({email})
+            await db();
+            return await this.users.findOne({ email });
         } catch (error) {
-            console.log(error)
-            return error
+            console.log(error);
+            return error;
         }
     }
 
@@ -55,13 +63,13 @@ class UserRepository{
     //     try {
     //         await this.users.create(
     //             {
-    //                ...event.user 
+    //                ...event.user
     //             }
     //         )
     //     } catch (error) {
     //         return error
     //     }
-       
+
     // }
 }
-module.exports =  UserRepository
+module.exports = UserRepository;

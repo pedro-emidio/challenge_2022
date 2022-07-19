@@ -38,9 +38,9 @@ functions:
     events:
       - http:
           path: /findUser
-          method: get
-          cors: true  
+          method: get  
           authorizer: authorizerFunction
+          cors: true
 
   findUser:
     handler: ./src/useCases/loginUser/index.handler
