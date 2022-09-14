@@ -1,11 +1,13 @@
 const db = require("../mongodb");
 
-const { Users } = require("../../schemas");
+const { Users, InsertRecord } = require("../../schemas");
 class UserRepository {
     constructor() {
         this.schemas = db;
         /** @type {import("mongoose").default.Model} */
         this.users = Users;
+        /** @type {import("mongoose").default.Model} */
+        this.record = InsertRecord;
     }
     async createUser(user) {
         try {
@@ -56,6 +58,10 @@ class UserRepository {
             console.log(error);
             return error;
         }
+    }
+    async addData(data) {
+        await db();
+        return await this.record.create(data);
     }
 
     // }

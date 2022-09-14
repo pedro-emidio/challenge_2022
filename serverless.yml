@@ -1,76 +1,86 @@
 service: challenge2022
 
-frameworkVersion: '2 || 3'
+frameworkVersion: "2 || 3"
 
 plugins:
-  - serverless-offline
+    - serverless-offline
 
 provider:
-  name: aws
-  runtime: nodejs14.x
-  environment: ${file(./.env.json)}
-  lambdaHashingVersion: '20201221'
+    name: aws
+    runtime: nodejs14.x
+    environment: ${file(./.env.json)}
+    lambdaHashingVersion: "20201221"
 
 functions:
-  createUser:
-    handler: ./src/useCases/createUser/index.handler
-    events:
-      - http:
-          path: /createUser
-          method: post
-          cors: true  
-          # authorizer:
-          #   type: JWT
-          #   functionName: authorizerFunction
-  
-  deleteUser:
-    handler: ./src/useCases/deleteUser/index.handler
-    events:
-      - http:
-          path: /deleteUser
-          method: delete
-          cors: true  
-          # authorizer:
-          #   functionName: authorizerFunction
+    createUser:
+        handler: ./src/useCases/createUser/index.handler
+        events:
+            - http:
+                  path: /createUser
+                  method: post
+                  cors: true
+                  # authorizer:
+                  #   type: JWT
+                  #   functionName: authorizerFunction
 
-  loginUser:
-    handler: ./src/useCases/findUser/index.handler
-    events:
-      - http:
-          path: /findUser
-          method: get  
-          authorizer: authorizerFunction
-          cors: true
+    deleteUser:
+        handler: ./src/useCases/deleteUser/index.handler
+        events:
+            - http:
+                  path: /deleteUser
+                  method: delete
+                  cors: true
+                  # authorizer:
+                  #   functionName: authorizerFunction
 
-  findUser:
-    handler: ./src/useCases/loginUser/index.handler
-    events:
-      - http:
-          path: /login
-          method: get
-          cors: true  
-          # authorizer: authorizerFunction   
+    loginUser:
+        handler: ./src/useCases/findUser/index.handler
+        events:
+            - http:
+                  path: /findUser
+                  method: get
+                  authorizer: authorizerFunction
+                  cors: true
 
-  updateUser:
-    handler: ./src/useCases/updateUser/index.handler
-    events:
-      - http:
-          path: /updateUser
-          method: put
-          cors: true  
-          # authorizer:
-          #   functionName: authorizerFunction
+    findUser:
+        handler: ./src/useCases/loginUser/index.handler
+        events:
+            - http:
+                  path: /login
+                  method: get
+                  cors: true
+                  # authorizer: authorizerFunction
 
-  createDevice:
-    handler: ./src/useCases/devices/create/index.handler
-    events:
-      - http:
-          path: /createDevice
-          method: post
-          cors: true  
-          # authorizer:
-          #   type: JWT
-          #   functionName: authorizerFunction
+    updateUser:
+        handler: ./src/useCases/updateUser/index.handler
+        events:
+            - http:
+                  path: /updateUser
+                  method: put
+                  cors: true
+                  # authorizer:
+                  #   functionName: authorizerFunction
 
-  authorizerFunction:
-    handler: ./src/auth/authorizer.handler
+    createDevice:
+        handler: ./src/useCases/devices/create/index.handler
+        events:
+            - http:
+                  path: /createDevice
+                  method: post
+                  cors: true
+                  # authorizer:
+                  #   type: JWT
+                  #   functionName: authorizerFunction
+    addData:
+        handler: ./src/useCases/AddData/index.handler
+        events:
+            - http:
+                  path: /addData
+                  method: post
+                  cors: true
+                  # authorizer:
+                  #   type: JWT
+                  #   functionName: authorizerFunction
+
+    authorizerFunction:
+        handler: ./src/auth/authorizer.handler
