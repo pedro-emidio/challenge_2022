@@ -9,9 +9,9 @@ class LoginUserService {
         const { email, password } = userData;
         const user = await this.#userRepository.findUserByEmail(email);
 
-        if (!user) return "User not exists";
+        if (!user) throw new Error("Not allowed");
         if (Buffer.from(password, "utf-8").toString("base64") !== user.password)
-            return "username or password is invalid";
+            throw new Error("Not allowed");
         return jwt.sign({ userId: user._id }, process.env.JWS_TOKEN);
     }
 }

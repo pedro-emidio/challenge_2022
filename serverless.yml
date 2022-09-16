@@ -47,7 +47,7 @@ functions:
         events:
             - http:
                   path: /login
-                  method: get
+                  method: post
                   cors: true
                   # authorizer: authorizerFunction
 
