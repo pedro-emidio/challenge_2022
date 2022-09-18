@@ -1,5 +1,5 @@
 const db = require("../mongodb");
-
+const moment = require("moment");
 const { Users, InsertRecord } = require("../../schemas");
 class UserRepository {
     constructor() {
@@ -63,19 +63,28 @@ class UserRepository {
         await db();
         return await this.record.create(data);
     }
-
-    // }
-    // async updateUser(event){
-    //     try {
-    //         await this.users.create(
-    //             {
-    //                ...event.user
-    //             }
-    //         )
-    //     } catch (error) {
-    //         return error
-    //     }
-
-    // }
+    async getData(userId, deviceId, dateFilter = "year") {
+        const today = moment().endOf("day");
+        switch (dateFilter) {
+            case "year":
+                dateFilter = moment().startOf("year");
+                break;
+            case "month":
+                dateFilter = moment().startOf("month");
+                break;
+            case "day":
+                dateFilter = moment().startOf("day");
+                break;
+        }
+        await db();
+        return await this.record.find({
+            userId,
+            deviceId,
+            insertData: {
+                $gte: dateFilter,
+                $lte: today,
+            },
+        });
+    }
 }
 module.exports = UserRepository;

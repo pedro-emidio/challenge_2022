@@ -81,6 +81,16 @@ functions:
                   # authorizer:
                   #   type: JWT
                   #   functionName: authorizerFunction
+    getData:
+        handler: ./src/useCases/GetData/index.handler
+        events:
+            - http:
+                  path: /getData
+                  method: get
+                  cors: true
+                  # authorizer:
+                  #   type: JWT
+                  #   functionName: authorizerFunction
 
     authorizerFunction:
         handler: ./src/auth/authorizer.handler
