@@ -82,6 +82,7 @@ functions:
                   #   type: JWT
                   #   functionName: authorizerFunction
     getData:
+        timeout: 30
         handler: ./src/useCases/GetData/index.handler
         events:
             - http:

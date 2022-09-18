@@ -12,11 +12,13 @@ module.exports = class AddDataController {
         context.callbackWaitsForEmptyEventLoop = false;
 
         try {
-            const { deviceId, userId, metrics } = JSON.parse(event.body);
+            let { deviceId, userId, metrics, insertData } = JSON.parse(
+                event.body
+            );
             const data = await this.addDataService.execute({
                 deviceId,
                 userId,
-                insertData: new Date(),
+                insertData: insertData ? insertData : new Date(),
                 metrics,
             });
 

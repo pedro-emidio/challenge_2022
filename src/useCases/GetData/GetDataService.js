@@ -10,6 +10,7 @@ module.exports = class AddDataService {
     }
 
     async execute(userId, deviceId, dateFilter = "year") {
+        const TENSAO_MEDIA = 120;
         const [data, yearData] = await Promise.all([
             this.userRepository.getData(userId, deviceId, dateFilter),
             this.userRepository.getData(userId, deviceId, "year"),
@@ -56,19 +57,16 @@ module.exports = class AddDataService {
                     "x"
                 );
                 for (const [key, values] of Object.entries(groupedData)) {
-                    let totalResistencia = 0;
                     let totalCorrente = 0;
                     let averageCorrente = 0;
-                    let averageResistencia = 0;
+
                     const [fistValue] = values;
                     const date = fistValue.insertData;
                     for (const metric of values) {
                         totalCorrente += metric.corrente;
-                        totalResistencia += metric.resistencia;
                     }
-                    averageCorrente = totalCorrente / parseFloat(values.length);
-                    averageResistencia =
-                        totalResistencia / parseFloat(values.length);
+                    averageCorrente = totalCorrente;
+
                     corrente.push({
                         x: key,
                         y: averageCorrente,
@@ -76,24 +74,18 @@ module.exports = class AddDataService {
                     });
                     tensao.push({
                         x: key,
-                        y: averageCorrente * averageResistencia,
+                        y: TENSAO_MEDIA,
                         date,
                     });
                     potencia.push({
                         x: key,
-                        y:
-                            averageCorrente *
-                            averageResistencia *
-                            averageCorrente,
+                        y: TENSAO_MEDIA * averageCorrente,
                         date,
                     });
                     if (todayFormated == key) {
-                        potenciaAtual =
-                            averageCorrente *
-                            averageResistencia *
-                            averageCorrente;
+                        potenciaAtual = averageCorrente * TENSAO_MEDIA;
                         correnteAtual = averageCorrente;
-                        tensaoAtual = averageCorrente * averageResistencia;
+                        tensaoAtual = TENSAO_MEDIA;
                     }
                 }
                 break;
@@ -111,19 +103,16 @@ module.exports = class AddDataService {
                     "x"
                 );
                 for (const [key, values] of Object.entries(groupedData)) {
-                    let totalResistencia = 0;
                     let totalCorrente = 0;
                     let averageCorrente = 0;
-                    let averageResistencia = 0;
+
                     const [fistValue] = values;
                     const date = fistValue.insertData;
                     for (const metric of values) {
                         totalCorrente += metric.corrente;
-                        totalResistencia += metric.resistencia;
                     }
-                    averageCorrente = totalCorrente / parseFloat(values.length);
-                    averageResistencia =
-                        totalResistencia / parseFloat(values.length);
+
+                    averageCorrente = totalCorrente;
                     corrente.push({
                         x: key,
                         y: averageCorrente,
@@ -131,15 +120,12 @@ module.exports = class AddDataService {
                     });
                     tensao.push({
                         x: key,
-                        y: averageCorrente * averageResistencia,
+                        y: TENSAO_MEDIA,
                         date,
                     });
                     potencia.push({
                         x: key,
-                        y:
-                            averageCorrente *
-                            averageResistencia *
-                            averageCorrente,
+                        y: TENSAO_MEDIA * averageCorrente,
                         date,
                     });
                 }
@@ -160,19 +146,16 @@ module.exports = class AddDataService {
                     "x"
                 );
                 for (const [key, values] of Object.entries(groupedData)) {
-                    let totalResistencia = 0;
                     let totalCorrente = 0;
                     let averageCorrente = 0;
-                    let averageResistencia = 0;
+
                     const [fistValue] = values;
                     const date = fistValue.insertData;
                     for (const metric of values) {
                         totalCorrente += metric.corrente;
-                        totalResistencia += metric.resistencia;
                     }
-                    averageCorrente = totalCorrente / parseFloat(values.length);
-                    averageResistencia =
-                        totalResistencia / parseFloat(values.length);
+                    averageCorrente = totalCorrente;
+
                     corrente.push({
                         x: key,
                         y: averageCorrente,
@@ -180,15 +163,12 @@ module.exports = class AddDataService {
                     });
                     tensao.push({
                         x: key,
-                        y: averageCorrente * averageResistencia,
+                        y: TENSAO_MEDIA,
                         date,
                     });
                     potencia.push({
                         x: key,
-                        y:
-                            averageCorrente *
-                            averageResistencia *
-                            averageCorrente,
+                        y: TENSAO_MEDIA * averageCorrente,
                         date,
                     });
                 }
@@ -222,18 +202,20 @@ module.exports = class AddDataService {
             "x"
         );
         for (const [key, values] of Object.entries(groupedData)) {
-            let totalResistencia = 0;
             let totalCorrente = 0;
             let averageCorrente = 0;
-            let averageResistencia = 0;
+
             const [fistValue] = values;
             const date = fistValue.insertData;
             for (const metric of values) {
                 totalCorrente += metric.corrente;
-                totalResistencia += metric.resistencia;
             }
-            averageCorrente = totalCorrente / parseFloat(values.length);
-            averageResistencia = totalResistencia / parseFloat(values.length);
+            averageCorrente = totalCorrente;
+
+            // console.log({
+            //     averageCorrente,
+            //     averagePotencia: TENSAO_MEDIA * averageCorrente,
+            // });
             corrente.push({
                 x: key,
                 y: averageCorrente,
@@ -241,25 +223,24 @@ module.exports = class AddDataService {
             });
             tensao.push({
                 x: key,
-                y: averageCorrente * averageResistencia,
+                y: TENSAO_MEDIA,
                 date,
             });
             potencia.push({
                 x: key,
-                y: averageCorrente * averageResistencia * averageCorrente,
+                y: TENSAO_MEDIA * averageCorrente,
                 date,
             });
             if (todayFormated == key) {
-                potenciaAtual =
-                    averageCorrente * averageResistencia * averageCorrente;
+                potenciaAtual = TENSAO_MEDIA * averageCorrente;
                 correnteAtual = averageCorrente;
-                tensaoAtual = averageCorrente * averageResistencia;
+                tensaoAtual = TENSAO_MEDIA;
             }
         }
         return {
             tensao: tensaoOrdenada,
-            corrente: potenciaOrdenada,
-            potencia: correnteOrdenada,
+            corrente: correnteOrdenada,
+            potencia: potenciaOrdenada,
             tensaoAtual,
             correnteAtual,
             potenciaAtual,
