@@ -65,7 +65,7 @@ module.exports = class AddDataService {
                     for (const metric of values) {
                         totalCorrente += metric.corrente;
                     }
-                    averageCorrente = totalCorrente;
+                    averageCorrente = parseFloat(totalCorrente / values.length);
 
                     corrente.push({
                         x: key,
@@ -112,7 +112,7 @@ module.exports = class AddDataService {
                         totalCorrente += metric.corrente;
                     }
 
-                    averageCorrente = totalCorrente;
+                    averageCorrente = parseFloat(totalCorrente / values.length);
                     corrente.push({
                         x: key,
                         y: averageCorrente,
@@ -131,9 +131,6 @@ module.exports = class AddDataService {
                 }
                 break;
             case "day":
-                var format = new Intl.DateTimeFormat("pt-br", {
-                    month: "long",
-                });
                 groupedData = groupBy(
                     formatedData.map((item) => {
                         return {
@@ -154,7 +151,7 @@ module.exports = class AddDataService {
                     for (const metric of values) {
                         totalCorrente += metric.corrente;
                     }
-                    averageCorrente = totalCorrente;
+                    averageCorrente = parseFloat(totalCorrente / values.length);
 
                     corrente.push({
                         x: key,
@@ -210,7 +207,7 @@ module.exports = class AddDataService {
             for (const metric of values) {
                 totalCorrente += metric.corrente;
             }
-            averageCorrente = totalCorrente;
+            averageCorrente = parseFloat(totalCorrente / values.length);
 
             // console.log({
             //     averageCorrente,
