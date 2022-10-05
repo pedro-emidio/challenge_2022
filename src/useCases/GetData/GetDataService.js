@@ -132,7 +132,7 @@ module.exports = class AddDataService {
                 }
                 break;
             case "day":
-                var format = new Intl.DateTimeFormat("pt-br", {
+                var format = new Intl.DateTimeFormat("pt-BR", {
                     hour: "2-digit",
                     minute: "2-digit",
                 });
