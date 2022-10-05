@@ -1,6 +1,7 @@
 const moment = require("moment");
 const { groupBy } = require("../../helpers/groupBy");
 const { sortArray } = require("../../helpers/sort");
+// moment.locale("pt-br");
 module.exports = class AddDataService {
     constructor(userRepository) {
         /**
@@ -131,13 +132,15 @@ module.exports = class AddDataService {
                 }
                 break;
             case "day":
+                var format = new Intl.DateTimeFormat("pt-br", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                });
                 groupedData = groupBy(
                     formatedData.map((item) => {
                         return {
                             ...item,
-                            x: moment(item.insertData)
-                                .locale("pt-br")
-                                .format("HH:mm"),
+                            x: format.format(item.insertData),
                         };
                     }),
                     "x"
@@ -185,6 +188,7 @@ module.exports = class AddDataService {
         potencia = [];
         tensao = [];
         corrente = [];
+
         var format = new Intl.DateTimeFormat("pt-br", {
             month: "long",
         });
