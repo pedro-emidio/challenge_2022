@@ -22,14 +22,14 @@ module.exports = class AddDataService {
         for (const item of data) {
             formatedData = formatedData.concat(
                 item.metrics.map((i) => {
-                    return { ...i, insertData: item.insertData };
+                    return { corrente: i, insertData: item.insertData };
                 })
             );
         }
         for (const item of yearData) {
             yearformatedData = yearformatedData.concat(
                 item.metrics.map((i) => {
-                    return { ...i, insertData: item.insertData };
+                    return { corrente: i, insertData: item.insertData };
                 })
             );
         }
