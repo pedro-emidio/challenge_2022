@@ -1,7 +1,7 @@
 const moment = require("moment");
 const { groupBy } = require("../../helpers/groupBy");
 const { sortArray } = require("../../helpers/sort");
-// moment.locale("pt-br");
+require("moment/locale/pt-br");
 module.exports = class AddDataService {
     constructor(userRepository) {
         /**
@@ -11,7 +11,13 @@ module.exports = class AddDataService {
     }
 
     async execute(userId, deviceId, dateFilter = "year") {
-        const TENSAO_MEDIA = 120;
+        let random = Math.random();
+        if (random > 0.5) {
+            random = random * 10;
+        } else {
+            random = -random * 7;
+        }
+        const TENSAO_MEDIA = 120 + random;
         const [data, yearData] = await Promise.all([
             this.userRepository.getData(userId, deviceId, dateFilter),
             this.userRepository.getData(userId, deviceId, "year"),
@@ -152,6 +158,7 @@ module.exports = class AddDataService {
                     const [fistValue] = values;
                     const date = fistValue.insertData;
                     for (const metric of values) {
+                        if (metric.corrente > 15) console.log(metric);
                         totalCorrente += metric.corrente;
                     }
                     averageCorrente = parseFloat(totalCorrente / values.length);
