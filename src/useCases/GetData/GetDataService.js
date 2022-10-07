@@ -140,13 +140,13 @@ module.exports = class AddDataService {
             case "day":
                 var format = new Intl.DateTimeFormat("pt-BR", {
                     hour: "2-digit",
-                    minute: "2-digit",
                 });
+
                 groupedData = groupBy(
                     formatedData.map((item) => {
                         return {
                             ...item,
-                            x: format.format(item.insertData),
+                            x: format.format(item.insertData) + ":00",
                         };
                     }),
                     "x"
