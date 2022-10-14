@@ -11,6 +11,9 @@ module.exports = class AddDataService {
     }
 
     async execute(userId, deviceId, dateFilter = "year") {
+        let tensaoAtual = 0,
+            potenciaAtual = 0,
+            correnteAtual = 0;
         let random = Math.random();
         if (random > 0.5) {
             random = random * 10;
@@ -44,9 +47,7 @@ module.exports = class AddDataService {
         let tensao = [];
         let potencia = [];
         let groupedData = {};
-        let tensaoAtual,
-            potenciaAtual,
-            correnteAtual = 0;
+
         // [{x:"Janeiro",y:20}]
         switch (dateFilter) {
             case "year":
@@ -58,6 +59,7 @@ module.exports = class AddDataService {
                     formatedData.map((item) => {
                         return {
                             ...item,
+
                             x: format.format(item.insertData),
                         };
                     }),
