@@ -59,7 +59,7 @@ module.exports = class AddDataService {
                     formatedData.map((item) => {
                         return {
                             ...item,
-
+                            date: item.insertData,
                             x: format.format(item.insertData),
                         };
                     }),
@@ -104,6 +104,7 @@ module.exports = class AddDataService {
                     formatedData.map((item) => {
                         return {
                             ...item,
+                            date: item.insertData,
                             x: new Date(item.insertData).toLocaleDateString(
                                 "pt-br"
                             ),
@@ -148,6 +149,7 @@ module.exports = class AddDataService {
                     formatedData.map((item) => {
                         return {
                             ...item,
+                            date: item.insertData,
                             x: format.format(item.insertData),
                         };
                     }),
@@ -206,6 +208,7 @@ module.exports = class AddDataService {
             yearformatedData.map((item) => {
                 return {
                     ...item,
+                    date: item.insertData,
                     x: format.format(item.insertData),
                 };
             }),
